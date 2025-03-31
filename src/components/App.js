@@ -25,14 +25,17 @@ export class App extends Component {
     console.log( this.$total)
     const donateForm = new Form( {onSubmit: this.onItemCreate.bind(this) } );
     this.$rootElement.appendChild(donateForm.$rootElement);
-    const donateList = new List();
+    const donateList = new List( { onDelete: this.onItemDelete.bind(this) } );
     this.$rootElement.appendChild(donateList.$rootElement);
 
     this.donateList = donateList;
   }
   
   onItemCreate(amount) {
-    const item = new ListItem({ amount });
+    const item = new ListItem({ amount, onDelete: (id, amount) => {
+      this.onItemDelete(id, amount);
+    }
+  });
     this.state.donates.push(item);
     this.state.total += amount;
     this.$total.textContent = this.state.total; 
@@ -40,5 +43,23 @@ export class App extends Component {
       
   }
 
+  onItemDelete(id, amount) {
+    
+    this.state.donates = this.state.donates.filter(item => item.id !== id);
+    
+    
+    this.state.total -= amount;
+    this.$total.textContent = this.state.total;
+    
+    
+    const items = this.donateList.$listContainer.children;
+    console.log(this.donateList.$listContainer)
+    for (let i = 0; i < items.length; i++) {
+      if (Number(items[i].dataset.id) === id) {
+        items[i].remove();
+        break;
+      }
+    }
+  }
 
 }

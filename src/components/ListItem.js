@@ -18,7 +18,7 @@ export class ListItem extends Component {
       ${this.state.date.getMonth()+1}/
       ${this.state.date.getFullYear()}, 
       ${this.state.date.getHours()}:
-      ${this.state.date.getMinutes()} - $${this.state.amount}
+      ${this.state.date.getMinutes()}:${this.state.date.getSeconds()} - $${this.state.amount}
     `;
     
     console.log(this.props);

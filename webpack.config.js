@@ -13,6 +13,8 @@ module.exports = (env, { mode }) => ({
         static: path.resolve(__dirname, 'build'),
         port: 8080,
         open: true,
+        allowedHosts: 'all',
+
     },
     plugins: [
         new HtmlWebpackPlugin({
